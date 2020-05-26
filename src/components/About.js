@@ -1,8 +1,7 @@
 import React from 'react';
 
-// class About extends React.Component {
 const About = (props) => {
-  console.log("check props:", props.history)
+  // console.log("check props:", props.history)
   setTimeout(() => { props.history.push('/contact') }, 3000)
 
 
