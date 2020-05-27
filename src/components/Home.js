@@ -1,32 +1,21 @@
 import React from 'react';
-import axios from 'axios';
-import Rainbow from '../hoc/Rainbow'
+// import Rainbow from '../hoc/Rainbow'
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class Home extends React.Component {
-    state = {
-        posts: []
-    }
 
-    componentDidMount() {
-        axios.get('https://jsonplaceholder.typicode.com/posts')
-            .then(res =>
-                this.setState({
-                    posts: res.data.splice(1, 10)
-                })
-            )
-
-    }
 
     render() {
-        const { posts } = this.state
+        const { posts } = this.props
+        console.log("check props...", posts);
         const postList = posts.length ? (
             posts.map(post => {
                 return (
                     <div className="post card" key={post.id}>
                         <div className="card-content">
-                            <Link to = {'/' + post.id}> 
-                            <span className="card-title">{post.title}</span>
+                            <Link to={'/' + post.id}>
+                                <span className="card-title">{post.title}</span>
                             </Link>
                             <p>{post.body}</p>
                         </div>
@@ -35,7 +24,7 @@ class Home extends React.Component {
                 )
             })
         ) : (
-                <div className="center" > No posts yet...</div>
+                <div className="center"> No posts yet...</div>
             )
 
         return (
@@ -48,4 +37,12 @@ class Home extends React.Component {
     }
 }
 
-export default Rainbow(Home);
+const mapStateToProps = (state) => {
+    console.log("check state", state);
+    return {
+        posts: state.posts
+    }
+}
+
+export default connect(mapStateToProps)(Home);
+// export default Rainbow(Home);
